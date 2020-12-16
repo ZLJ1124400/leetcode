@@ -1,0 +1,26 @@
+import java.util.*;
+class Solution {
+    public int distanceBetweenBusStops(int[] distance, int start, int destination) {
+        int sum = 0, stage = 0;
+        // 取start和destination的最小值和最大值
+        int min = Math.min(start,destination);
+        int max = Math.max(start,destination);
+        for(int i=0;i<distance.length;i++){
+            // 获取总距离
+            sum += distance[i];
+            // min - max的距离
+            if( i >= min && i < max ) stage += distance[i];
+        }
+        // 取stage距离 和 总距离减stage 中的最小值
+        return Math.min(stage, sum - stage);
+    }
+
+    public static void main(String[] args){
+        int[] distance = {1,2,3,4};
+        int start = 0;
+        int destination = 2;
+        int res = (new Solution()).distanceBetweenBusStops(distance, start, destination);
+        System.out.println(res);
+    }
+}
+
