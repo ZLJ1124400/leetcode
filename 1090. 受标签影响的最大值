@@ -1,0 +1,14 @@
+class Solution:
+    def largestValsFromLabels(self, values: List[int], labels: List[int], num_wanted: int, use_limit: int) -> int:
+        list_len = len(values)
+        items = [(values[i], labels[i]) for i in range(list_len)]
+        label_count, res = {}, 0
+        for item in sorted(items, key=lambda item: item[0], reverse=True):
+            count = 0 if item[1] not in label_count else label_count[item[1]]
+            if count < use_limit:
+                res += item[0]
+                num_wanted -= 1
+                if not num_wanted:
+                    break
+                label_count[item[1]] = count + 1
+        return res
