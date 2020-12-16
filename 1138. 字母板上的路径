@@ -1,0 +1,40 @@
+class Solution {
+    static int dis[][][] = new int[26][26][2];
+    static{
+        for(int i = 0; i < 25; i++)
+            for(int j = i + 1; j < 26; j++){
+                dis[i][j] = new int[]{j / 5 - i / 5, j % 5 - i % 5};//向右下为正
+                dis[j][i] = new int[]{-dis[i][j][0], -dis[i][j][1]};//向左上为负
+            }
+    }
+    public String alphabetBoardPath(String target) {
+        StringBuilder sb = new StringBuilder();
+        char[] cs = target.toCharArray();
+        char pre = 'a';
+        int row, col;
+        for(char c: cs){
+            row = dis[pre-'a'][c-'a'][0];
+            col = dis[pre-'a'][c-'a'][1];
+            while(row++ < 0){
+                sb.append("U");
+            }
+            row--;
+
+            while( col-- > 0){
+                sb.append("R");
+            }
+            col++;
+            while(col++ < 0){
+                sb.append("L");
+            }
+
+            while(row-- > 0){
+                sb.append("D");
+            }
+            
+            sb.append("!");
+            pre = c;
+        }
+        return sb.toString();
+    }
+}
